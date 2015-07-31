@@ -6,47 +6,63 @@ import java.util.List;
 
 public class Engine {
     private List<Command> chain;
+    private Operator lastOperator = Operator.ADDITION;
 
     public Engine() {
         this.chain = new ArrayList<>();
     }
 
     public double add(double input) {
-        Command newLink = new Command(Operator.ADDITION, input);
-        chain.add(newLink);
-        return calculate();
+        return addToChain(Operator.ADDITION, input);
     }
 
     public double sub(double input) {
-        Command newLink = new Command(Operator.SUBTRACTION, input);
-        chain.add(newLink);
-        return calculate();
+        return addToChain(Operator.SUBTRACTION, input);
+    }
+
+    public double times(double input) {
+        return addToChain(Operator.TIMES, input);
+    }
+
+    public double div(double input) {
+        return addToChain(Operator.DIV, input);
     }
 
     public double equals(double input) {
-        Command newLink = new Command(Operator.EQUALS, input);
+        Command newLink = new Command(lastOperator, input);
         chain.add(newLink);
+        lastOperator = Operator.ADDITION;
 
         double total = calculate();
         chain.clear();
         return total;
     }
 
+    private double addToChain(Operator operator, double input) {
+        Command newLink = new Command(lastOperator, input);
+        chain.add(newLink);
+        lastOperator = operator;
+        return calculate();
+    }
+
     private double calculate() {
         Iterator<Command> commandIterator = chain.iterator();
         double total = 0;
-        Operator buffer = Operator.ADDITION;
 
         while (commandIterator.hasNext()) {
             Command current = commandIterator.next();
-            switch (buffer) {
+            switch (current.getOperator()) {
                 case ADDITION:
-                    buffer = current.getOperator();
                     total += current.getInput();
                     break;
                 case SUBTRACTION:
-                    buffer = current.getOperator();
                     total -= current.getInput();
+                    break;
+                case TIMES:
+                    total *= current.getInput();
+                    break;
+                case DIV:
+                    total /= current.getInput();
                     break;
                 case EQUALS:
                 default:

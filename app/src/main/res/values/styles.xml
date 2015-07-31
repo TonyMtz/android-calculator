@@ -1,8 +1,16 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="FireTheme" parent="android:Theme.Material.Light">
         <!-- Customize your theme here. -->
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">#FF7D49</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">#FF5815</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">#eee</item>
+        <item name="android:textColorPrimary">#666</item>
     </style>
 
 </resources>

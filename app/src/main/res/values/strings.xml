@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Calculator</string>
+
+    <string name="display_default_text">0.0</string>
+</resources>
